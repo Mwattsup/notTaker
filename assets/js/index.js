@@ -8,13 +8,6 @@ var $goToNotes = $("#goToNotes");
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
 
-var goToNotes = function() {
-  return $.ajax({
-    url: "/notes",
-    method: "GET"
-  });
-};
-
 // A function for getting all notes from the db
 var getNotes = function() {
   return $.ajax({
@@ -140,7 +133,6 @@ var getAndRenderNotes = function() {
   });
 };
 
-$goToNotes.on("click", goToNotes);
 $saveNoteBtn.on("click", handleNoteSave);
 $noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
