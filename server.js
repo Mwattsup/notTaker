@@ -10,11 +10,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname,'public',)));
 
 
-app.get("/", function (_req, res) {
+app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get("/notes", function (_req, res) {
+app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, 'public', 'notes.html'));
 });
 
@@ -40,8 +40,7 @@ app.post('/api/notes', (req, res) => {
 
         let newNote = {
             title: req.body.title,
-            text: req.body.text,
-            id: shortid.generate()
+            text: req.body.text
         }
 
         notes.push(newNote);
