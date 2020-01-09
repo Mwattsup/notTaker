@@ -45,7 +45,7 @@ app.post('/api/notes', (req, res) => {
 
         notes.push(newNote);
 
-        fs.appendFile("public/db/db.json", JSON.stringify(notes, null, 2), (error) => {
+        fs.writeFile("public/db/db.json", JSON.stringify(notes, null, 2), (error) => {
             if (error) {
                 throw error;
             };
