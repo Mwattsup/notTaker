@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require('fs');
+const shortid = require("shortid");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -40,7 +41,8 @@ app.post('/api/notes', (req, res) => {
 
         let newNote = {
             title: req.body.title,
-            text: req.body.text
+            text: req.body.text,
+            id: shortid.generate()
         }
 
         notes.push(newNote);
@@ -55,6 +57,33 @@ app.post('/api/notes', (req, res) => {
     });
 
 });
+
+
+app.delete('/api/notes/:id', (req, res) => {
+    let active = req.params.id;
+  
+    fs.readFile("public/db/db.json", function (err,data) {
+      if (err) throw err;
+      let notes = JSON.parse(data);
+      
+      function searchNotes(active, notes) {
+        for (var i=0; i < notes.length; i++) {
+            if (notes[i].id === active) {
+                notes.splice(i, 1);  
+            }
+        }
+      }
+  
+      searchNotes(active, notes);
+  
+      fs.writeFile("public/db/db.json", JSON.stringify(notes, null, 2), (err) => {
+        if (err) throw err;
+        res.send('200');
+      });
+  
+    });
+  
+  });
 
 
 app.listen(PORT, function () {
